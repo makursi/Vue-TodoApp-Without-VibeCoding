@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 //定义物品清单类型接口
 interface Todo {
@@ -11,7 +11,7 @@ interface Todo {
 //任务内容
 const todo = ref("");
 const todos = ref<Todo[]>([]);
-
+const filterStatus = ref("");
 //添加任务
 
 function addTodo() {
@@ -43,6 +43,29 @@ function handleChange(id: number) {
 
     console.log(todos.value);
 }
+//添加功能
+// 筛选（全部 / 未完成 / 已完成）→ computed（计算属性）
+
+const filteredTodos = computed(() => {
+    switch (filterStatus.value) {
+        case "active":
+            return todos.value.filter((todo) => {
+                return !todo.completed;
+            });
+        case "completed":
+            return todos.value.filter((todo) => {
+                return todo.completed;
+            });
+        default:
+            return todos.value;
+    }
+});
+// 统计未完成数量 → computed
+
+const activecount = computed(() => {
+    return todos.value.filter((item) => !item.completed).length;
+});
+// 监听任务变化 → watch（监听）
 </script>
 
 <template>
@@ -73,12 +96,31 @@ function handleChange(id: number) {
                 </ul>
             </div>
         </div>
+
+        <div>
+            <h2>统计清单:</h2>
+            <p>未完成任务数:{{ activecount }}</p>
+
+            <div>
+                <button @click="filterStatus = ''">全部</button>
+                <button @click="filterStatus = 'completed'">已完成</button>
+                <button @click="filterStatus = 'active'">未完成</button>
+            </div>
+            <div>
+                <ul>
+                    <li v-for="ftodo of filteredTodos" :key="ftodo.id">
+                        <p>{{ ftodo.content }}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
 <style lang="css" scoped>
 .completed {
     text-decoration: line-through;
+    color: #999;
 }
 
 .todoApp {
