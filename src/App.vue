@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 
 //定义物品清单类型接口
 interface Todo {
@@ -10,8 +10,10 @@ interface Todo {
 
 //任务内容
 const todo = ref("");
-const todos = ref<Todo[]>([]);
-const filterStatus = ref("");
+
+const todos = ref<Todo[]>(JSON.parse(localStorage.getItem("todos")) || []);
+
+const filterStatus = ref("all");
 //添加任务
 
 function addTodo() {
@@ -26,6 +28,15 @@ function addTodo() {
     });
 
     todo.value = "";
+}
+
+// 删除任务
+
+function deleteTodo(id: number) {
+    //重新赋值
+    todos.value = todos.value.filter((todo) => {
+        return todo.id !== id;
+    });
 }
 
 //切换任务状态
@@ -62,16 +73,26 @@ const filteredTodos = computed(() => {
 });
 // 统计未完成数量 → computed
 
-const activecount = computed(() => {
-    return todos.value.filter((item) => !item.completed).length;
+const activeCount = computed(() => {
+    return todos.value.filter((todo) => {
+        return !todo.completed;
+    }).length;
 });
-// 监听任务变化 → watch（监听）
+// 监听任务变化 → watch（监听）,本地进行存储, 刷新页面仍能保存
+
+watch(
+    todos,
+    (val) => {
+        localStorage.setItem("todos", JSON.stringify(val));
+    },
+    { deep: true }, //深度监听
+);
 </script>
 
 <template>
     <div class="todoApp">
         <div>
-            <h1>Todolist</h1>
+            <h1>TodoList</h1>
 
             <label>
                 <input type="text" v-model="todo" />
@@ -92,27 +113,30 @@ const activecount = computed(() => {
                             :checked="todo.completed"
                             @change="handleChange(todo.id)"
                         />
+                        <button @click="deleteTodo(todo.id)">删除任务</button>
                     </li>
                 </ul>
             </div>
         </div>
+    </div>
+
+    <div class="filteredTodos">
+        <div>
+            <p>未完成的任务有:{{ activeCount }}</p>
+
+            <div>
+                <button @click="filterStatus = 'all'">全部</button>
+                <button @click="filterStatus = 'active'">未完成</button>
+                <button @click="filterStatus = 'completed'">已完成</button>
+            </div>
+        </div>
 
         <div>
-            <h2>统计清单:</h2>
-            <p>未完成任务数:{{ activecount }}</p>
-
-            <div>
-                <button @click="filterStatus = ''">全部</button>
-                <button @click="filterStatus = 'completed'">已完成</button>
-                <button @click="filterStatus = 'active'">未完成</button>
-            </div>
-            <div>
-                <ul>
-                    <li v-for="ftodo of filteredTodos" :key="ftodo.id">
-                        <p>{{ ftodo.content }}</p>
-                    </li>
-                </ul>
-            </div>
+            <ul>
+                <li v-for="ftodo of filteredTodos" :key="ftodo.id">
+                    <p>{{ ftodo.content }}</p>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
