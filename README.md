@@ -1,36 +1,16 @@
-# Rsbuild project
+# 兄弟啊,AI编程把你给害惨啦!!!
 
-## Setup
+**没了大模型,ai IDE,哥们怎么连Vue也快忘了怎么写了呢🤭**
 
-Install the dependencies:
 
-```bash
-pnpm install
-```
+**这面试邀请给你来, 我出三个题你答上来,这offer就是你的了来**
 
-## Get started
+**拿着!!!**
 
-Start the dev server, and the app will be available at [http://localhost:3000](http://localhost:3000).
+**(摇我的头), 给你机会你也不中用啊**
 
-```bash
-pnpm run dev
-```
+''''
 
-Build the app for production:
+# 此项目搭配个人博客文章用来复习Vue基础知识,核心原理,项目经验总结
 
-```bash
-pnpm run build
-```
-
-Preview the production build locally:
-
-```bash
-pnpm run preview
-```
-
-## Learn more
-
-To learn more about Rsbuild, check out the following resources:
-
-- [Rsbuild documentation](https://rsbuild.rs) - explore Rsbuild features and APIs.
-- [Rsbuild GitHub repository](https://github.com/web-infra-dev/rsbuild) - your feedback and contributions are welcome!
+## 铭记拒绝Vibe Coding, 守护古法编程
