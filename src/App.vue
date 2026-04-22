@@ -118,25 +118,25 @@ watch(
                 </ul>
             </div>
         </div>
-    </div>
 
-    <div class="filteredTodos">
-        <div>
-            <p>未完成的任务有:{{ activeCount }}</p>
+        <div class="filteredTodos">
+            <div>
+                <p>未完成的任务有:{{ activeCount }}</p>
+
+                <div>
+                    <button @click="filterStatus = 'all'">全部</button>
+                    <button @click="filterStatus = 'active'">未完成</button>
+                    <button @click="filterStatus = 'completed'">已完成</button>
+                </div>
+            </div>
 
             <div>
-                <button @click="filterStatus = 'all'">全部</button>
-                <button @click="filterStatus = 'active'">未完成</button>
-                <button @click="filterStatus = 'completed'">已完成</button>
+                <ul>
+                    <li v-for="ftodo of filteredTodos" :key="ftodo.id">
+                        <p>{{ ftodo.content }}</p>
+                    </li>
+                </ul>
             </div>
-        </div>
-
-        <div>
-            <ul>
-                <li v-for="ftodo of filteredTodos" :key="ftodo.id">
-                    <p>{{ ftodo.content }}</p>
-                </li>
-            </ul>
         </div>
     </div>
 </template>

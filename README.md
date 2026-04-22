@@ -1,16 +1,2 @@
-# 兄弟啊,AI编程把你给害惨啦!!!
-
-**没了大模型,ai IDE,哥们怎么连Vue也快忘了怎么写了呢🤭**
-
-
-**这面试邀请给你来, 我出三个题你答上来,这offer就是你的了来**
-
-**拿着!!!**
-
-**(摇我的头), 给你机会你也不中用啊**
-
-''''
-
-# 此项目搭配个人博客文章用来复习Vue基础知识,核心原理,项目经验总结
-
-## 铭记拒绝Vibe Coding, 守护古法编程
+# A simple Vue to-do list application
+Help me review the basics of Vue...
